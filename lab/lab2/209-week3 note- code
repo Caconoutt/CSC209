@@ -1,0 +1,136 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char **argv) {
+
+    // Ensure that the program was called correctly, 
+    //which is at least three: executable name, flag, minimum a number
+    // flag is like a shortcut to tell which function wants to use, 
+    //like below argv[1][0] checks the flag
+    if (argc < 3) {
+        printf("Usage: sum_or_avg <operation s/a> <args ...>");
+        return 1; // exit the program right away
+    }
+
+    int total = 0;
+    
+    int i;
+    // i starts from 2 because at 0 it's executable name, at 1 it's flag
+    for (i = 2; i < argc; i++) { 
+        total += strtol(argv[i], NULL, 10); // strol to read the number
+    }
+
+    if (argv[1][0] == 'a') { //argv[1][0] checks the flag arguement from the command
+        // We need to cast total to float before the division.
+        // Try removing the cast and see what happens.
+        double average = (float) total / (argc - 2);
+        printf("average: %f \n", average);
+    } else {
+        printf("sum: %d\n", total);
+    }
+
+    return 0;
+}
+
+
+//the file
+#include <stdio.h>
+
+int main() {
+    int error;
+    FILE *scores_file; //file pointer
+    //second argument it's the purpose of opening the file
+    scores_file = fopen("top10.txt", "r");
+    if (scores_file == NULL) {
+        //we print out standard error with message
+        fprintf(stderr, "Error opening file\n");
+        return 1;
+    }
+
+    printf("File opened: we can use it here\n");
+    //always close the file after opening
+    //fclose(FILE *) returns 0 when it's successful
+    error = fclose(scores_file);
+    if (error != 0) {
+        fprintf(stderr, "fclose failed\n");
+        return 1;
+    }
+
+    return 0;
+}
+
+
+//read from files
+#include <stdio.h>
+
+#define LINE_LENGTH 80
+
+/* Reads and prints the contents of a file (top10.txt). */
+int main() {
+    FILE *scores_file;
+    int error;
+    //to hold each line
+    char line[LINE_LENGTH + 1];  // +1 for the null-terminator
+  
+    scores_file = fopen("top10.txt", "r");
+
+    // Check if scores_file was opened properly:
+    if (scores_file == NULL) {
+        fprintf(stderr, "Error opening file\n");
+        return 1;
+    }
+
+    // If fgets fails to read any characters, it returns NULL.
+    // We can use this fact to tell if we've reached the end
+    // of the file:
+    while (fgets(line, LINE_LENGTH + 1, scores_file) != NULL) {
+        printf("%s", line);
+    }
+    //fgets stop when a new line character is made, scanf stop when a 
+    //space is made; fgets() the third arguement can be stdin, which will
+    //take input from keyboard by default
+    error = fclose(scores_file);
+    if (error != 0) {
+        fprintf(stderr, "fclose failed\n");
+        return 1;
+    }
+    return 0;
+}
+
+
+
+
+//===========scanf===========
+
+#include <stdio.h>
+
+int main() {
+    FILE *scores_file;
+    int error, total;
+    char name[81];
+  
+    scores_file = fopen("top10.txt", "r");
+    if (scores_file == NULL) {
+        fprintf(stderr, "Error opening file\n");
+        return 1;
+    }
+  
+    // Like scanf, fscanf returns the number of items successfully
+    // read.
+    // Here we compare the return value of fscanf to 2, since we
+    // expect it to find two things on each call: a string
+    // and an integer.
+    while (fscanf(scores_file, "%80s %d", name, &total) == 2) {
+    //condition is == 2 because we have two argument to take in
+        //%80s tells to read the first 80 char, it stops when there's a space
+        printf("Name: %s. Score: %d.\n", name, total);
+    }
+  
+    error = fclose(scores_file);
+    if (error != 0) {
+        fprintf(stderr, "fclose failed\n");
+        return 1;
+    }
+
+    return 0;
+}

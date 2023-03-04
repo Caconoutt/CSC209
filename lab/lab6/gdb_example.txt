@@ -1,0 +1,6 @@
+Script started on Tue Feb 14 16:07:01 2023
+[1m[7m%[27m[1m[0m                                                                                                             [0m[27m[24m[Jxuexiaoying@Camilla-XUEs-MacBook-Pro lab6 % [K[?2004hlls[?2004l
+copy		copy.c		copy.dSYM	gdb_example.txt	overflow.c
+[1m[7m%[27m[1m[0m                                                                                                             [0m[27m[24m[Jxuexiaoying@Camilla-XUEs-MacBook-Pro lab6 % [K[?2004heexist  t[?2004l
+
+Script done on Tue Feb 14 16:07:09 2023
